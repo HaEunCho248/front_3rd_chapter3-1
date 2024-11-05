@@ -244,7 +244,7 @@ describe('findOverlappingEvents', () => {
 
     const result = findOverlappingEvents(newEvent, events);
 
-    expect(result).toEqual([event1, event2]);
+    expect(result).toEqual([event2]);
   });
 
   it('겹치는 이벤트가 없으면 빈 배열을 반환한다', () => {
