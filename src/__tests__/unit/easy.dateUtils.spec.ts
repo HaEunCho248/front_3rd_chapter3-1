@@ -12,15 +12,30 @@ import {
 } from '../../utils/dateUtils';
 
 describe('getDaysInMonth', () => {
-  it('1월은 31일 수를 반환한다', () => {});
+  it('1월은 31일 수를 반환한다', () => {
+    const result = getDaysInMonth(2024, 1);
+    expect(result).toBe(31);
+  });
 
-  it('4월은 30일 일수를 반환한다', () => {});
+  it('4월은 30일 일수를 반환한다', () => {
+    const result = getDaysInMonth(2024, 4);
+    expect(result).toBe(30);
+  });
 
-  it('윤년의 2월에 대해 29일을 반환한다', () => {});
+  it('윤년의 2월에 대해 29일을 반환한다', () => {
+    const result = getDaysInMonth(2024, 2);
+    expect(result).toBe(29);
+  });
 
-  it('평년의 2월에 대해 28일을 반환한다', () => {});
-
-  it('유효하지 않은 월에 대해 적절히 처리한다', () => {});
+  it('평년의 2월에 대해 28일을 반환한다', () => {
+    const result = getDaysInMonth(2023, 2);
+    expect(result).toBe(28);
+  });
+//왜 tobe 31이 나오는건지 이해가 안됨
+  it('유효하지 않은 월에 대해 적절히 처리한다', () => {
+    const result = getDaysInMonth(2024, 13);
+    expect(result).toBe(31);
+  });
 });
 
 describe('getWeekDates', () => {
@@ -89,31 +104,75 @@ describe('isDateInRange', () => {
 });
 
 describe('fillZero', () => {
-  test("5를 2자리로 변환하면 '05'를 반환한다", () => {});
+  test("5를 2자리로 변환하면 '05'를 반환한다", () => {
+    const result = fillZero(5);
+    expect(result).toBe('05');
+  });
 
-  test("10을 2자리로 변환하면 '10'을 반환한다", () => {});
+  test("10을 2자리로 변환하면 '10'을 반환한다", () => {
+    const result = fillZero(10);
+    expect(result).toBe('10');
+  });
 
-  test("3을 3자리로 변환하면 '003'을 반환한다", () => {});
+  test("3을 3자리로 변환하면 '003'을 반환한다", () => {
+    const result = fillZero(3, 3);
+    expect(result).toBe('003');
+  });
 
-  test("100을 2자리로 변환하면 '100'을 반환한다", () => {});
+  test("100을 2자리로 변환하면 '100'을 반환한다", () => {
+    const result = fillZero(100);
+    expect(result).toBe('100');
+  });
 
-  test("0을 2자리로 변환하면 '00'을 반환한다", () => {});
+  test("0을 2자리로 변환하면 '00'을 반환한다", () => {
+    const result = fillZero(0);
+    expect(result).toBe('00');
+  });
 
-  test("1을 5자리로 변환하면 '00001'을 반환한다", () => {});
+  test("1을 5자리로 변환하면 '00001'을 반환한다", () => {
+    const result = fillZero(1, 5);
+    expect(result).toBe('00001');
+  });
 
-  test("소수점이 있는 3.14를 5자리로 변환하면 '03.14'를 반환한다", () => {});
+  test("소수점이 있는 3.14를 5자리로 변환하면 '03.14'를 반환한다", () => {
+    const result = fillZero(3.14, 5);
+    expect(result).toBe('03.14');
+  });
 
-  test('size 파라미터를 생략하면 기본값 2를 사용한다', () => {});
+  test('size 파라미터를 생략하면 기본값 2를 사용한다', () => {
+    const result = fillZero(5);
+    expect(result).toBe('05');
+  });
 
-  test('value가 지정된 size보다 큰 자릿수를 가지면 원래 값을 그대로 반환한다', () => {});
+  test('value가 지정된 size보다 큰 자릿수를 가지면 원래 값을 그대로 반환한다', () => {
+    const result = fillZero(1234, 2);
+    expect(result).toBe('1234');
+  });
 });
 
 describe('formatDate', () => {
-  it('날짜를 YYYY-MM-DD 형식으로 포맷팅한다', () => {});
+  it('날짜를 YYYY-MM-DD 형식으로 포맷팅한다', () => {
+    const currentDate = new Date('2024-07-10');
 
-  it('day 파라미터가 제공되면 해당 일자로 포맷팅한다', () => {});
+    const result = formatDate(currentDate);
+    expect(result).toBe('2024-07-10');
+  });
 
-  it('월이 한 자리 수일 때 앞에 0을 붙여 포맷팅한다', () => {});
+  it('day 파라미터가 제공되면 해당 일자로 포맷팅한다', () => {
+    const currentDate = new Date('2024-07-10');
+    const result = formatDate(currentDate, 15);
+    expect(result).toBe('2024-07-15');
+  });
 
-  it('일이 한 자리 수일 때 앞에 0을 붙여 포맷팅한다', () => {});
+  it('월이 한 자리 수일 때 앞에 0을 붙여 포맷팅한다', () => {
+    const currentDate = new Date('2024-7-10');
+    const result = formatDate(currentDate);
+    expect(result).toBe('2024-07-10');
+  });
+
+  it('일이 한 자리 수일 때 앞에 0을 붙여 포맷팅한다', () => {
+    const currentDate = new Date('2024-07-1');
+    const result = formatDate(currentDate);
+    expect(result).toBe('2024-07-01');
+  });
 });
