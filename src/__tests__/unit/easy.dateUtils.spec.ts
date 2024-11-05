@@ -31,7 +31,8 @@ describe('getDaysInMonth', () => {
     const result = getDaysInMonth(2023, 2);
     expect(result).toBe(28);
   });
-//왜 tobe 31이 나오는건지 이해가 안됨
+
+  //냄새남
   it('유효하지 않은 월에 대해 적절히 처리한다', () => {
     const result = getDaysInMonth(2024, 13);
     expect(result).toBe(31);
