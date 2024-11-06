@@ -142,10 +142,10 @@ it('현재 뷰(주간/월간)에 해당하는 이벤트만 반환해야 한다',
       notificationTime: 60,
     },
   ];
-  const { result } = renderHook(() => useSearch(events, new Date('2024-10-01'), 'week'));
+  const { result } = renderHook(() => useSearch(events, new Date(), 'week'));
 
   act(() => {
-    result.current.setSearchTerm('');
+    result.current.setSearchTerm('이벤트 1');
   });
 
   expect(result.current.filteredEvents).toEqual([events[0]]);
@@ -183,4 +183,5 @@ it("검색어를 '회의'에서 '점심'으로 변경하면 필터링된 결과�
   act(() => {
     result.current.setSearchTerm('회의');
   });
+  expect(result.current.filteredEvents).toHaveLength(0);
 });
