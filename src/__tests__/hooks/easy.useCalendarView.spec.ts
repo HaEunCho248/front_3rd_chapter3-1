@@ -3,8 +3,15 @@ import { act, renderHook } from '@testing-library/react';
 import { useCalendarView } from '../../hooks/useCalendarView.ts';
 import { assertDate } from '../utils.ts';
 
+beforeEach(() => {
+  vi.setSystemTime('2024-10-01');
+});
+
 describe('초기 상태', () => {
-  it('view는 "month"이어야 한다', () => {});
+  it('view는 "month"이어야 한다', () => {
+    const { result } = renderHook(() => useCalendarView());
+    expect(result.current.view).toBe('month');
+  });
 
   it('currentDate는 오늘 날짜인 "2024-10-01"이어야 한다', () => {});
 
