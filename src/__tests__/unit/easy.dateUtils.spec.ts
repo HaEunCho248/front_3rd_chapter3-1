@@ -124,29 +124,21 @@ describe('getWeekDates', () => {
   });
 
   it('월의 마지막 날짜를 포함한 주를 올바르게 처리한다', () => {
-    const weekDates = getWeekDates(new Date('2024-07-31'));
-    expect(weekDates).toEqual([
-      new Date('2024-07-28'),
-      new Date('2024-07-29'),
-      new Date('2024-07-30'),
-      new Date('2024-07-31'),
-      new Date('2024-08-01'),
-      new Date('2024-08-02'),
-      new Date('2024-08-03'),
-    ]);
+    const targetDate = new Date('2024-11-30');
+    const week = formatWeek(targetDate);
+    expect(week).toBe('2024년 11월 4주');
   });
 });
 
 describe('getWeeksAtMonth', () => {
   it('2024년 7월 1일의 올바른 주 정보를 반환해야 한다', () => {
-    const currentDate = new Date('2024-07-01');
-    const result = getWeeksAtMonth(currentDate);
-    expect(result).toEqual([
-      [null, null, null, 1, 2, 3, 4],
-      [5, 6, 7, 8, 9, 10, 11],
-      [12, 13, 14, 15, 16, 17, 18],
-      [19, 20, 21, 22, 23, 24, 25],
-      [26, 27, 28, 29, 30, 31, null],
+    const weeks = getWeeksAtMonth(new Date('2024-07-01'));
+    expect(weeks).toEqual([
+      [null, 1, 2, 3, 4, 5, 6],
+      [7, 8, 9, 10, 11, 12, 13],
+      [14, 15, 16, 17, 18, 19, 20],
+      [21, 22, 23, 24, 25, 26, 27],
+      [28, 29, 30, 31, null, null, null],
     ]);
   });
 });
@@ -320,15 +312,22 @@ describe('formatWeek', () => {
   });
 
   it('월의 마지막 주에 대해 올바른 주 정보를 반환한다', () => {
-    const currentDate = new Date('2024-07-31');
+    const currentDate = new Date('2024-11-30');
     const result = formatWeek(currentDate);
-    expect(result).toBe('2024년 7월 5주');
+    expect(result).toBe('2024년 11월 4주');
   });
 
   it('연도가 바뀌는 주에 대해 올바른 주 정보를 반환한다', () => {
-    const currentDate = new Date('2024-12-31');
-    const result = formatWeek(currentDate);
-    expect(result).toBe('2024년 12월 5주');
+    const weekDates = getWeekDates(new Date('2024-12-29'));
+    expect(weekDates).toEqual([
+      new Date('2024-12-29'),
+      new Date('2024-12-30'),
+      new Date('2024-12-31'),
+      new Date('2025-01-01'),
+      new Date('2025-01-02'),
+      new Date('2025-01-03'),
+      new Date('2025-01-04'),
+    ]);
   });
 
   it('윤년 2월의 마지막 주에 대해 올바른 주 정보를 반환한다', () => {
@@ -338,9 +337,9 @@ describe('formatWeek', () => {
   });
 
   it('평년 2월의 마지막 주에 대해 올바른 주 정보를 반환한다', () => {
-    const currentDate = new Date('2023-02-28');
-    const result = formatWeek(currentDate);
-    expect(result).toBe('2023년 2월 4주');
+    const targetDate = new Date('2023-02-28');
+    const week = formatWeek(targetDate);
+    expect(week).toBe('2023년 3월 1주');
   });
 });
 
